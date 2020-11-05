@@ -8,7 +8,11 @@ function createWindow() {
         height: 800,
         backgroundColor: 'white',
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: false,
+            // will sanitizr JS code
+            worldSafeExecuteJavaScript: true,
+            // is a feature that ensures that both, your preload scripts and Electron 
+            contextIsolation: true
         }
     }); 
 
@@ -16,7 +20,10 @@ function createWindow() {
     win.webContents.openDevTools();
 }
 
-app.whenReady().then(createWindow);
+app.whenReady()
+    .then(() => {
+        createWindow();
+    });
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
